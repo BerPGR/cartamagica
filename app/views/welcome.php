@@ -84,7 +84,7 @@
     <section id="como-funciona" class="py-24 bg-base-200">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-14">
-                Como funciona
+                Como funciona?
             </h2>
 
             <div class="grid md:grid-cols-3 gap-8">
