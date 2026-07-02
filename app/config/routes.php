@@ -14,4 +14,8 @@ $router->group('', function(Router $router) use ($app) {
 	$router->get('/', function () use ($app) {
 		$app->render('welcome');
 	});
+
+	$router->get('/login', function() use ($app) {
+		$app->render('login');
+	});
 }, [ SecurityHeadersMiddleware::class ]);
