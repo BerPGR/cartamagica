@@ -2,24 +2,38 @@
 
     <div class="navbar-start">
         <a href="/" class="text-2xl font-bold text-secondary">
-            <img src="/images/logo.png" class="w-10"/>
+            <img src="/images/logo.png" class="w-10" />
         </a>
     </div>
 
     <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal gap-2">
 
-            <li>
-                <a href="#como-funciona" id="option1">
-                    Como funciona
-                </a>
-            </li>
+            <?php if ($_SERVER['REQUEST_URI'] === '/') { ?>
+                <li>
+                    <a href="#como-funciona">
+                        Como funciona
+                    </a>
+                </li>
 
-            <li>
-                <a href="#beneficios" id="option2">
-                    Benefícios
-                </a>
-            </li>
+                <li>
+                    <a href="#beneficios">
+                        Benefícios
+                    </a>
+                </li>
+            <?php } else { ?>
+                <li>
+                    <a href="/home">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/cartas">
+                        Minhas Cartas
+                    </a>
+                </li>
+            <?php } ?>
         </ul>
     </div>
 

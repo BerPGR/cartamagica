@@ -42,4 +42,8 @@ $router->group('', function(Router $router) use ($app) {
 	$router->get('/home', function () use ($app, $csp) {
 		$app->render('home', ['csp_nonce' => $csp]);
 	});
+
+	$router->get('/cartas', function () use ($app, $csp) {
+		$app->render('cartas', ['csp_nonce' => $csp]);
+	});
 }, [ SecurityHeadersMiddleware::class ]);

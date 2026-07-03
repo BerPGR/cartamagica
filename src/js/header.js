@@ -6,30 +6,11 @@ const secondAnchor = document.getElementById('option2')
 
 document.addEventListener('DOMContentLoaded', () => {
     checkJwtToken()
-    loadAnchors()
 });
-
-function loadAnchors() {
-    const location = window.location.pathname
-
-    if (location !== '/') {
-        firstAnchor.textContent = 'Home'
-        firstAnchor.setAttribute('href', "/home")
-        
-        secondAnchor.textContent = 'Minhas cartas'
-        secondAnchor.setAttribute('href', '/cartas')
-
-    } else {
-        firstAnchor.textContent = 'Como funciona'
-        firstAnchor.setAttribute('href', "#como-funciona")
-        
-        secondAnchor.textContent = 'Benefícios'
-        secondAnchor.setAttribute('href', '#beneficios')
-    }
-}
 
 function checkJwtToken() {
     const token = localStorage.getItem('token');
+    const publicRoutes = ['/', '/login']
     
     if (!token && window.location.pathname !== '/') {
         window.location.href = '/'
@@ -42,7 +23,7 @@ function checkJwtToken() {
     
         if (isValid) {
             btnLogin?.classList.add('hidden');
-            if (window.location.pathname !== '/home') {
+            if (publicRoutes.includes(window.location.pathname)) {
                 window.location.href = '/home';
             }
         } else {

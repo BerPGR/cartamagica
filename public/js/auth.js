@@ -49,6 +49,10 @@ form.addEventListener('submit', async (event) => {
     const originalText = submitButton.textContent
     submitButton.textContent = isRegisterMode ? 'Registrando...' : 'Entrando...'
 
+    const loading = document.createElement('span')
+    loading.className = 'loading loading-md'
+    submitButton.appendChild(loading)
+
     try {
         const response = await fetch(form.getAttribute('action'), {
             method: 'POST',
@@ -76,5 +80,6 @@ form.addEventListener('submit', async (event) => {
     } finally {
         submitButton.disabled = false
         submitButton.textContent = originalText
+        submitButton.removeChild()
     }
 })
