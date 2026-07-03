@@ -10,23 +10,16 @@
         <ul class="menu menu-horizontal gap-2">
 
             <li>
-                <a href="#como-funciona">
+                <a href="#como-funciona" id="option1">
                     Como funciona
                 </a>
             </li>
 
             <li>
-                <a href="#beneficios">
+                <a href="#beneficios" id="option2">
                     Benefícios
                 </a>
             </li>
-
-            <li>
-                <a href="#faq">
-                    FAQ
-                </a>
-            </li>
-
         </ul>
     </div>
 
