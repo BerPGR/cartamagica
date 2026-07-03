@@ -10,25 +10,33 @@
 
 <body>
     <section class="w-full min-h-screen container mx-auto flex items-center justify-center">
-        <div class="card shadow-md bg-base-300 w-1/3">
+        <div class="card shadow-md bg-base-300 w-full max-w-md mx-4">
             <div class="card-body">
-                <h2 class="card-title">Entrar</h2>
+                <img src="/images/logo_escrito.png" class="h-20 mb-4 self-center"/>
+                <h2 class="card-title self-center">Entrar</h2>
+                <p class="self-center">Entre com suas credenciais</p>
                 <form class="space-y-4" action="/login" method="post">
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">E-mail</legend>
-                        <input name="email" type="text" class="input w-full" />
+                    <fieldset class="fieldset hidden">
+                        <legend for="name" class="fieldset-legend">Nome</legend>
+                        <input name="name" type="text" id="name" class="input w-full" />
                     </fieldset>
                     <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Senha</legend>
-                        <input name="password" type="password" class="input w-full" />
+                        <legend for="email" class="fieldset-legend">E-mail</legend>
+                        <input autocomplete="email" name="email" type="email" id="email" required class="input w-full" />
+                    </fieldset>
+                    <fieldset class="fieldset">
+                        <legend for="password" class="fieldset-legend">Senha</legend>
+                        <input name="password" type="password" id="password" required class="input w-full" />
                     </fieldset>
                     <button class="btn btn-secondary w-full" type="submit">Entrar</button>
                     <div class="divider">OU</div>
-                    <button class="btn btn-outline btn-secondary w-full">Registre-se</button>
+                    <button type="button" id="btn-register" class="btn btn-outline btn-secondary w-full">Criar conta</button>
                 </form>
             </div>
         </div>
     </section>
+
+    <script src="/js/auth.js" nonce="<?= $csp_nonce ?>"></script>
 </body>
 
 </html>

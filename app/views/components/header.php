@@ -2,7 +2,7 @@
 
     <div class="navbar-start">
         <a href="/" class="text-2xl font-bold text-secondary">
-            💜 Carta Mágica
+            <img src="/images/logo.png" class="w-10"/>
         </a>
     </div>
 
