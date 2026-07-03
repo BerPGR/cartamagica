@@ -32,7 +32,7 @@
 
     <div class="navbar-end gap-3">
 
-        <a href="/login" class="btn btn-ghost">
+        <a href="/login" class="btn btn-ghost" id="btn-login">
             Entrar
         </a>
 
@@ -42,4 +42,5 @@
 
     </div>
 
+    <script type="module" src="/js/header.js" nonce="<?= htmlspecialchars($csp_nonce ?? '') ?>"></script>
 </header>

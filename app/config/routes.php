@@ -12,12 +12,12 @@ require_once __DIR__ . "/../controllers/AuthController.php";
 
 // This wraps all routes in the group with the SecurityHeadersMiddleware
 $router->group('', function(Router $router) use ($app) {
-	$router->get('/', function () use ($app) {
-		$app->render('welcome');
+	$csp = $app->get('csp_nonce');
+	$router->get('/', function () use ($app, $csp) {
+		$app->render('welcome', ['csp_nonce' => $csp]);
 	});
 
-	$router->get('/login', function() use ($app) {
-		$csp = $app->get('csp_nonce');
+	$router->get('/login', function() use ($app, $csp) {
 		$app->render('login', ['csp_nonce' => $csp]);
 	});
 
@@ -39,7 +39,7 @@ $router->group('', function(Router $router) use ($app) {
 		}
 	});
 
-	$router->get('/home', function () use ($app) {
-		$app->render('home');
+	$router->get('/home', function () use ($app, $csp) {
+		$app->render('home', ['csp_nonce' => $csp]);
 	});
 }, [ SecurityHeadersMiddleware::class ]);
