@@ -29,4 +29,17 @@ $router->group('', function(Router $router) use ($app) {
 			$app->redirect('/login');
 		}
 	});
+
+	$router->post('/register', function () use ($app) {
+		$controller = new AuthController($app);
+		try {
+			$controller->register();
+		} catch (\Throwable $e) {
+			$app->redirect('/');
+		}
+	});
+
+	$router->get('/home', function () use ($app) {
+		$app->render('home');
+	});
 }, [ SecurityHeadersMiddleware::class ]);

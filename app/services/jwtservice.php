@@ -9,10 +9,10 @@ class JwtService {
     private string $algorithm;
 
     public function __construct() {
-        $config = require __DIR__ . "/../config/config.php";
-        $this->secret = $config['auth']['jwt_secret'];
-        $this->expiration = $config['auth']['jwt_expiration'];
-        $this->algorithm = $config['auth']['jwt_algorithm'];
+        $config = Flight::get('auth_config');
+        $this->secret = $config['jwt_secret'];
+        $this->expiration = $config['jwt_expiration'];
+        $this->algorithm = $config['jwt_algorithm'];
     }
 
     public function generate(array $payload)

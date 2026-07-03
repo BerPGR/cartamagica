@@ -59,7 +59,6 @@ form.addEventListener('submit', async (event) => {
         })
 
         const data = await response.json().catch(() => null)
-        alert(data.error)
 
         if (!response.ok) {
             const message = data?.message || 'Ocorreu um erro. Por favor, tente novamente.'
