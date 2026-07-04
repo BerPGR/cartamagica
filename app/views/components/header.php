@@ -1,4 +1,4 @@
-<header class="navbar bg-base-200 border-b border-base-300 px-6 lg:px-12 sticky top-0 z-50">
+<header class="navbar bg-base-300 shadow-md px-6 lg:px-12 sticky top-0 z-50">
 
     <div class="navbar-start">
         <a href="/" class="text-2xl font-bold text-secondary">
@@ -19,18 +19,6 @@
                 <li>
                     <a href="#beneficios">
                         Benefícios
-                    </a>
-                </li>
-            <?php } else { ?>
-                <li>
-                    <a href="/home">
-                        Home
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/cartas">
-                        Minhas Cartas
                     </a>
                 </li>
             <?php } ?>

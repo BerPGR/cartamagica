@@ -32,8 +32,6 @@ class Gemini
     public function ask(array $respostas)
     {
         $promptTexto = $this->montarPrompt($respostas);
-        var_dump($promptTexto); // Debug: Output the prompt text
-        exit;
 
         try {
             $response = $this->http->post('', [

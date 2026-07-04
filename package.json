@@ -6,10 +6,10 @@
   },
   "scripts": {
     "dev:css": "tailwindcss -i ./src/input.css -o public/css/style.css --watch",
-    "dev:js": "esbuild src/js/header.js --bundle --outfile=public/js/header.js --watch",
+    "dev:js": "esbuild src/js/header.js src/js/home.js src/js/auth.js --bundle --outdir=public/js --watch",
     "dev": "concurrently \"npm run dev:css\" \"npm run dev:js\"",
     "build:css": "tailwindcss -i ./src/input.css -o public/css/style.css --minify",
-    "build:js": "esbuild src/js/header.js --bundle --minify --outfile=public/js/header.js",
+    "build:js": "esbuild src/js/header.js --bundle --minify --outdit=public/js",
     "build": "npm run build:css && npm run build:js"
   },
   "devDependencies": {
