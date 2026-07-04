@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode"
 
-const cardTitle = document.querySelector('card-title')
+const cardTitle = document.querySelector('.card-title')
 const btnLogout = document.getElementById('btn-logout')
 
 document.addEventListener('DOMContentLoaded', () => {

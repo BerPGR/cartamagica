@@ -56,7 +56,7 @@
   }
 
   // src/js/home.js
-  var cardTitle = document.querySelector("card-title");
+  var cardTitle = document.querySelector(".card-title");
   var btnLogout = document.getElementById("btn-logout");
   document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("token");
