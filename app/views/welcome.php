@@ -11,10 +11,8 @@
 
 <body class="bg-base-100">
 
-    <!-- Navbar -->
     <?php include __DIR__ . "/components/header.php"; ?>
 
-    <!-- Hero -->
     <section class="hero min-h-[85vh]">
         <div class="hero-content flex-col lg:flex-row-reverse gap-20">
 
