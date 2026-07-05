@@ -29,6 +29,7 @@ class ChatController
     {
         $gemini = new GeminiChat($_ENV['GEMINI_KEY']);
         $resposta = trim(Flight::request()->data->resposta ?? '');
+        $user_id = Flight::request()->data->user_id ?? '';
         $turno = $_SESSION['turno'] ?? 0;
 
         try {
@@ -48,9 +49,9 @@ class ChatController
             if ($turno >= TOTAL_PERGUNTAS) {
                 $resultado = $gemini->gerarCartaFinal($resposta, $_SESSION['interaction_id']);
 
-                $stmt = Flight::db()->prepare("INSERT INTO cartas (session_id, texto_carta) VALUES (?, ?)");
+                $stmt = Flight::db()->prepare("INSERT INTO cartas (session_id, texto_carta, user_id) VALUES (?, ?, ?)");
 
-                $stmt->execute([session_id(), $resultado['text']]);
+                $stmt->execute([session_id(), $resultado['text'], $user_id]);
                 $cartaId = Flight::db()->lastInsertId();
 
                 $_SESSION['carta_id'] = $cartaId;

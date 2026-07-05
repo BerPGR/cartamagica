@@ -9,7 +9,9 @@ class CartasController {
         $this->app = $app;
     }
 
-    public function index() {
-        
+    public function index($cartaId) {
+        $stmt = Flight::db()->prepare("SELECT * FROM cartas where user_id = ?");
+        $stmt->execute([$cartaId]);
+        $result = $stmt->fetchAll();
     }
 }

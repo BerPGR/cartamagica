@@ -1,3 +1,5 @@
+import { jwtDecode } from "jwt-decode";
+
 const chatBox = document.getElementById('chat');
 const loading = document.getElementById('loading');
 const inputArea = document.getElementById('input-area');
@@ -44,11 +46,18 @@ function atualizarProgresso(atual, total) {
     progressoTexto.textContent = `${atual}/${total}`;
 }
 
-async function enviarResposta(texto) {
+async function enviarResposta(texto, user_id = null) {
+    const params = new URLSearchParams()
+    params.append('resposta', texto)
+
+    if (user_id !== null) {
+        params.append('user_id', user_id)
+    }
+
     const resp = await fetch('/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'resposta=' + encodeURIComponent(texto),
+        body: params.toString()
     });
 
     if (!resp.ok) {
@@ -93,15 +102,17 @@ async function enviarMensagem() {
     adicionarMensagem(texto, 'usuario');
     input.value = '';
     travarInput(true);
-
+    
+    let user_id = null
     if (isUltimaResposta) {
+        user_id = getUserId()
         mostrarTelaGerando();
     } else {
         mostrarLoading(true);
     }
 
     try {
-        const data = await enviarResposta(texto);
+        const data = await enviarResposta(texto, user_id);
         processarResposta(data);
     } catch (e) {
         console.error('Erro:', e);
@@ -113,6 +124,12 @@ async function enviarMensagem() {
             input.focus();
         }
     }
+}
+
+function getUserId() {
+    const token = localStorage.getItem('token')
+    const decode = jwtDecode(token)
+    return decode.sub
 }
 
 async function iniciarChat() {
