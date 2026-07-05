@@ -48,9 +48,16 @@ class ChatController
             if ($turno >= TOTAL_PERGUNTAS) {
                 $resultado = $gemini->gerarCartaFinal($resposta, $_SESSION['interaction_id']);
 
+                $stmt = Flight::db()->prepare("INSERT INTO cartas (session_id, texto_carta) VALUES (?, ?)");
+
+                $stmt->execute([session_id(), $resultado['text']]);
+                $cartaId = Flight::db()->lastInsertId();
+
+                $_SESSION['carta_id'] = $cartaId;
+
                 return [
                     'tipo' => 'final',
-                    'texto' => $resultado['text'],
+                    'carta_id' => $cartaId,
                 ];
             }
 

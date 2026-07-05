@@ -7,6 +7,10 @@
   var btnEnviar = document.getElementById("btn-enviar");
   var progressoBar = document.getElementById("progresso-bar");
   var progressoTexto = document.getElementById("progresso-texto");
+  var conteudoChat = document.getElementById("conteudo-chat");
+  var telaStatus = document.getElementById("tela-status");
+  var statusGerando = document.getElementById("status-gerando");
+  var statusPronto = document.getElementById("status-pronto");
   function adicionarMensagem(texto, autor) {
     const lado = autor === "ia" ? "chat-start" : "chat-end";
     const cor = autor === "ia" ? "chat-bubble-primary" : "";
@@ -45,14 +49,25 @@
     }
     return await resp.json();
   }
+  function mostrarTelaGerando() {
+    conteudoChat.classList.add("hidden");
+    telaStatus.classList.remove("hidden");
+    statusGerando.classList.remove("hidden");
+    statusPronto.classList.add("hidden");
+  }
+  function mostrarTelaPronto() {
+    statusGerando.classList.add("hidden");
+    statusPronto.classList.remove("hidden");
+  }
   function processarResposta(data) {
     if (data.tipo === "pergunta") {
       adicionarMensagem(data.texto, "ia");
       atualizarProgresso(data.progresso, data.total);
     } else if (data.tipo === "final") {
-      adicionarMensagem(data.texto, "ia");
-      inputArea.classList.add("hidden");
-      atualizarProgresso(progressoBar.max, progressoBar.max);
+      mostrarTelaPronto();
+      setTimeout(() => {
+        window.location.href = "/pagamento/" + data.carta_id;
+      }, 2e3);
     } else if (data.tipo === "erro") {
       adicionarMensagem(data.texto, "ia");
     }
@@ -60,19 +75,27 @@
   async function enviarMensagem() {
     const texto = input.value.trim();
     if (!texto) return;
+    const isUltimaResposta = progressoBar.value === progressoBar.max;
     adicionarMensagem(texto, "usuario");
     input.value = "";
     travarInput(true);
-    mostrarLoading(true);
+    if (isUltimaResposta) {
+      mostrarTelaGerando();
+    } else {
+      mostrarLoading(true);
+    }
     try {
       const data = await enviarResposta(texto);
       processarResposta(data);
     } catch (e) {
+      console.error("Erro:", e);
       adicionarMensagem("Algo deu errado. Tente novamente.", "ia");
     } finally {
-      mostrarLoading(false);
-      travarInput(false);
-      input.focus();
+      if (!isUltimaResposta) {
+        mostrarLoading(false);
+        travarInput(false);
+        input.focus();
+      }
     }
   }
   async function iniciarChat() {

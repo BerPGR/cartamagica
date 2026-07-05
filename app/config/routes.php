@@ -59,4 +59,8 @@ $router->group('', function (Router $router) use ($app) {
 		$controller = new ChatController($app);
 		$controller->send();
 	});
+
+	$router->get('/pagamento/@cartaId', function () use ($app, $csp) {
+		$app->render('pagamento', ['csp_nonce'=> $csp]);
+	});
 }, [SecurityHeadersMiddleware::class]);
