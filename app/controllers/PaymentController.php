@@ -103,27 +103,45 @@ class PaymentController
             return;
         }
 
-        $statusInterno = MercadoPagoService::mapStatus($payment->status);
-        $update = Flight::db()->prepare("UPDATE cartas SET status = ?, mp_payment_id = ? WHERE id = ?");
-        $update->execute([$statusInterno, $payment->id, $cartaId]);
+        try {
+            $statusInterno = MercadoPagoService::mapStatus($payment->status);
 
-        $resposta = [
-            'status' => $payment->status,
-            'status_interno' => $statusInterno,
-            'payment_method_id' => $payment->payment_method_id
-        ];
+            $update = Flight::db()->prepare(
+                "UPDATE cartas SET status = ?, mp_payment_id = ? WHERE id = ?"
+            );
+            $update->execute([$statusInterno, $payment->id, $cartaId]);
 
-        if ($payment->payment_method_id === 'pix') {
-            $resposta['qr_code'] = $payment->point_of_interaction->transaction_data->qr_code ?? null;
-            $resposta['qr_code_base64'] = $payment->point_of_interaction->transaction_data->qr_code_base64 ?? null;
+            $resposta = [
+                'status' => $payment->status,
+                'status_interno' => $statusInterno,
+                'payment_method_id' => $payment->payment_method_id
+            ];
+
+            if ($payment->payment_method_id === 'pix') {
+                $resposta['qr_code'] =
+                    $payment->point_of_interaction->transaction_data->qr_code ?? null;
+
+                $resposta['qr_code_base64'] =
+                    $payment->point_of_interaction->transaction_data->qr_code_base64 ?? null;
+            }
+
+            if (in_array($payment->payment_method_id, ['bolbradesco', 'boleto'], true)) {
+                $resposta['boleto_url'] =
+                    $payment->transaction_details->external_resource_url ?? null;
+
+                $resposta['barcode'] =
+                    $payment->barcode->content ?? null;
+            }
+
+            $this->app->json($resposta);
+        } catch (\Throwable $e) {
+            die('<pre>'
+                . get_class($e) . "\n\n"
+                . $e->getMessage() . "\n\n"
+                . $e->getFile() . ':' . $e->getLine() . "\n\n"
+                . $e->getTraceAsString()
+                . '</pre>');
         }
-
-        if (in_array($payment->payment_method_id, ['bolbradesco', 'boleto'], true)) {
-            $resposta['boleto_url'] = $payment->transaction_details->external_resource_url ?? null;
-            $resposta['barcode'] = $payment->barcode->content ?? null;
-        }
-
-        $this->app->json($resposta);
     }
 
     public function status(int $cartaId)

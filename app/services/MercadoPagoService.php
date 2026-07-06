@@ -54,10 +54,7 @@ class MercadoPagoService
     {
         return match ($mpStatus) {
             'approved' => 'pago',
-            'pending', 'in_process' => 'pendente',
-            'rejected' => 'rejeitado',
-            'cancelled', 'refunded', 'charge_back' => 'cancelado',
-            default => 'pendente'
+            default => 'aguardando_pagamento',
         };
     }
 }
