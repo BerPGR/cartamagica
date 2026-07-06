@@ -27,6 +27,7 @@
         "flightphp/core": "^3.0",
         "flightphp/runway": "^0.2 || ^1.1",
         "guzzlehttp/guzzle": "^7.13",
+        "mercadopago/dx-php": "^3.12",
         "tracy/tracy": "^2.9",
         "vlucas/phpdotenv": "^5.6"
     },

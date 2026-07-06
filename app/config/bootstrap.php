@@ -25,6 +25,7 @@ $app = Flight::app();
  * will be returned by the require statement where you can assign it to a var.
  */
 $config = require('config.php');
+$app->set('mp_config', $config['mercadopago']);
 $app->register('db', SimplePdo::class, [
 	'sqlite:' . __DIR__ . "/../../db.sqlite",
 	'',
