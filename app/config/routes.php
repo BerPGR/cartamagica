@@ -6,6 +6,7 @@ use flight\net\Router;
 
 require_once __DIR__ . "/../controllers/AuthController.php";
 require_once __DIR__ . "/../controllers/ChatController.php";
+require_once __DIR__ . "/../controllers/CartasController.php";
 
 /** 
  * @var Router $router 
@@ -47,6 +48,11 @@ $router->group('', function (Router $router) use ($app) {
 
 	$router->get('/cartas', function () use ($app, $csp) {
 		$app->render('cartas', ['csp_nonce' => $csp]);
+	});
+
+	$router->get('/cartas/user/@userId', function ($userId) use ($app) {
+		$controller = new CartasController($app);
+		$controller->index($userId);
 	});
 
 	$router->get('/create', function () use ($app, $csp) {
