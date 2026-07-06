@@ -25,18 +25,16 @@ $router->group('', function (Router $router) use ($app) {
 	});
 
 	$router->post("/login", function () use ($app) {
-		$controller = new AuthController($app);
 		try {
-			$controller->login();
+			(new AuthController($app))->login();
 		} catch (\Throwable $e) {
 			$app->redirect('/login');
 		}
 	});
 
 	$router->post('/register', function () use ($app) {
-		$controller = new AuthController($app);
 		try {
-			$controller->register();
+			(new AuthController($app))->register();
 		} catch (\Throwable $e) {
 			$app->redirect('/');
 		}
@@ -51,8 +49,7 @@ $router->group('', function (Router $router) use ($app) {
 	});
 
 	$router->get('/cartas/user/@userId', function ($userId) use ($app) {
-		$controller = new CartasController($app);
-		$controller->index($userId);
+		(new CartasController($app))->index($userId);
 	});
 
 	$router->get('/create', function () use ($app, $csp) {
@@ -62,8 +59,7 @@ $router->group('', function (Router $router) use ($app) {
 	});
 
 	$router->post('/chat', function () use ($app) {
-		$controller = new ChatController($app);
-		$controller->send();
+		(new ChatController($app))->send();
 	});
 
 	$router->get('/pagamento/@cartaId', function () use ($app, $csp) {

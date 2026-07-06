@@ -40,7 +40,7 @@ class MercadoPagoService
         return $this->paymentClient->get($paymentId);
     }
 
-    public function mapStatus(string $mpStatus): string
+    public static function mapStatus(string $mpStatus): string
     {
         return match ($mpStatus) {
             'approved' => 'pago',
