@@ -32,7 +32,17 @@ class MercadoPagoService
             'X-Idempotency-Key: ' . bin2hex(random_bytes(16))
         ]);
 
-        return $this->paymentClient->create($requestData, $requestOptions);
+        try {
+            return $this->paymentClient->create($requestData, $requestOptions);
+        } catch (\Throwable $e) {
+            echo '<pre>';
+            echo "Classe: " . get_class($e) . PHP_EOL;
+            echo "Mensagem: " . $e->getMessage() . PHP_EOL;
+            echo PHP_EOL . "Trace:" . PHP_EOL;
+            echo $e->getTraceAsString();
+            echo '</pre>';
+            exit;
+        }
     }
 
     public function searchPayment(int $paymentId): object

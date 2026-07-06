@@ -51,7 +51,7 @@
 
                     <div class="divider divider-secondary"></div>
                     <div class="card-action flex items-center justify-between">
-                        <button class="btn btn-error" type="button" id="btn-logout" onclick="logout()">Sair da conta</button>
+                        <button class="btn btn-error" type="button" id="btn-logout">Sair da conta</button>
                     </div>
                 </div>
             </div>

@@ -7,6 +7,7 @@ use flight\net\Router;
 require_once __DIR__ . "/../controllers/AuthController.php";
 require_once __DIR__ . "/../controllers/ChatController.php";
 require_once __DIR__ . "/../controllers/CartasController.php";
+require_once __DIR__ . "/../controllers/PaymentController.php";
 
 /** 
  * @var Router $router 
@@ -62,7 +63,19 @@ $router->group('', function (Router $router) use ($app) {
 		(new ChatController($app))->send();
 	});
 
-	$router->get('/pagamento/@cartaId', function () use ($app, $csp) {
-		$app->render('pagamento', ['csp_nonce'=> $csp]);
+	$router->get('/pagamento/@cartaId', function ($cartaId) use ($app) {
+		(new PaymentController($app))->show((int) $cartaId);
+	});
+
+	$router->post('/pagamento/processar', function () use ($app) {
+		(new PaymentController($app))->process();
+	});
+
+	$router->get('/pagamento/status/@cartaId', function ($cartaId) use ($app) {
+		(new PaymentController($app))->status((int) $cartaId);
 	});
 }, [SecurityHeadersMiddleware::class]);
+
+$router->post('/webhook/mercadopago', function () use ($app) {
+    (new PaymentController($app))->webhook();
+});

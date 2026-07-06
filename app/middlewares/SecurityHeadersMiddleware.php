@@ -14,18 +14,24 @@ class SecurityHeadersMiddleware
 	{
 		$this->app = $app;
 	}
-	
+
 	public function before(array $params): void
 	{
 		$nonce = $this->app->get('csp_nonce');
 
 		// development mode to execute Tracy debug bar CSS
 		$tracyCssBypass = "'nonce-{$nonce}'";
-		if(Debugger::$showBar === true) {
+		if (Debugger::$showBar === true) {
 			$tracyCssBypass = ' \'unsafe-inline\'';
 		}
 
-		$csp = "default-src 'self'; script-src 'self' 'nonce-{$nonce}' 'strict-dynamic'; style-src 'self' {$tracyCssBypass}; img-src 'self' data:;";
+		$csp = "default-src 'self'; "
+			. "script-src 'self' 'nonce-{$nonce}' 'strict-dynamic' https://sdk.mercadopago.com https://*.mlstatic.com; "
+			. "style-src 'self' {$tracyCssBypass}; "
+			. "img-src 'self' data: https://*.mercadopago.com https://*.mercadolibre.com https://*.mercadolivre.com https://*.mlstatic.com; "
+			. "frame-src https://*.mercadopago.com https://*.mercadolibre.com https://*.mercadolivre.com; "
+			. "connect-src 'self' https://api.mercadopago.com https://*.mercadopago.com https://*.mercadolibre.com https://*.mercadolivre.com https://*.mlstatic.com https://events.mercadopago.com;";
+
 		$this->app->response()->header('X-Frame-Options', 'SAMEORIGIN');
 		$this->app->response()->header("Content-Security-Policy", $csp);
 		$this->app->response()->header('X-XSS-Protection', '1; mode=block');
