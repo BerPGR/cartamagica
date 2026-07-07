@@ -53,6 +53,16 @@ $router->group('', function (Router $router) use ($app) {
 		(new CartasController($app))->index($userId);
 	});
 
+	$router->get('/carta/@cartaId', function (int $cartaId) use ($app, $csp) {
+		$app->render('carta', [
+			'csp_nonce' => $csp
+		]);
+	});
+
+	$router->get('/cartas/@cartaId', function (int $cartaId) use ($app) {
+		(new CartasController($app))->show($cartaId);
+	});
+
 	$router->get('/create', function () use ($app, $csp) {
 		$_SESSION['interaction_id'] = null;
 		$_SESSION['turno'] = 0;

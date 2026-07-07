@@ -49,7 +49,7 @@ function renderCartas(cartas) {
         const statusInfo = STATUS_LABELS[carta.status] ?? { label: carta.status, badge: 'badge-ghost' }
 
         const acaoHtml = carta.status === 'pago'
-            ? `<a href="/resultado/${carta.id}" class="btn btn-sm btn-outline">Ver carta</a>`
+            ? `<a href="/carta/${carta.id}" class="btn btn-sm btn-outline">Ver carta</a>`
             : `<a href="/pagamento/${carta.id}" class="btn btn-sm btn-secondary">Pagar</a>`
 
         return `

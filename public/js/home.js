@@ -95,7 +95,7 @@
     cartasCount.textContent = `${cartas.length} carta${cartas.length > 1 ? "s" : ""}`;
     cartasTbody.innerHTML = cartas.map((carta) => {
       const statusInfo = STATUS_LABELS[carta.status] ?? { label: carta.status, badge: "badge-ghost" };
-      const acaoHtml = carta.status === "pago" ? `<a href="/resultado/${carta.id}" class="btn btn-sm btn-outline">Ver carta</a>` : `<a href="/pagamento/${carta.id}" class="btn btn-sm btn-secondary">Pagar</a>`;
+      const acaoHtml = carta.status === "pago" ? `<a href="/carta/${carta.id}" class="btn btn-sm btn-outline">Ver carta</a>` : `<a href="/pagamento/${carta.id}" class="btn btn-sm btn-secondary">Pagar</a>`;
       return `
             <tr>
                 <td>${escapeHtml(extrairTitulo(carta.texto_carta))}</td>
