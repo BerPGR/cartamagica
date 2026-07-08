@@ -47,9 +47,7 @@
           creditCard: "all",
           debitCard: "all",
           bankTransfer: "all",
-          // Pix
           ticket: "all"
-          // Boleto
         }
       },
       callbacks: {
