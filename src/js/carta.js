@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const textoEl    = document.getElementById('carta-texto');
     const dataEl     = document.getElementById('carta-data');
 
-    // Mapeamento dos status do Mercado Pago -> ajuste se seus valores forem outros
     const STATUS_CONFIG = {
         pago:   { liberado: true },
         pending:    { liberado: false, badge: 'badge-warning', label: 'Pagamento pendente',
@@ -58,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // status pendente/recusado/desconhecido -> não exibe texto_carta
         pendingTitleEl.textContent = config?.label || 'Status desconhecido';
         pendingMsgEl.textContent = config?.msg || 'Não foi possível determinar o status desta carta.';
         pendingBadgeEl.textContent = data.status;

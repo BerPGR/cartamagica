@@ -46,11 +46,6 @@ class PaymentController
         ]);
     }
 
-    /**
-     * POST /pagamento/processar
-     * Recebe o formData do Payment Brick (cartão, pix ou boleto) e cria o
-     * pagamento via API do Mercado Pago.
-     */
     public function process(): void
     {
         $body = json_decode($this->app->request()->getBody(), true);

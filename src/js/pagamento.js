@@ -54,8 +54,8 @@ async function renderPaymentBrick() {
       paymentMethods: {
         creditCard: 'all',
         debitCard: 'all',
-        bankTransfer: 'all', // Pix
-        ticket: 'all',       // Boleto
+        bankTransfer: 'all',
+        ticket: 'all',       
       },
     },
     callbacks: {
