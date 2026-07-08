@@ -40,15 +40,20 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             await document.fonts.ready;
 
-            const canvas = await html2canvas(rendAreaEl, { scale: 2, useCORS: true });
+            const escala = Math.max(2, window.devicePixelRatio * 2);
+            const canvas = await html2canvas(rendAreaEl, { scale: escala, useCORS: true });
             const imgData = canvas.toDataURL('image/png');
 
+            const larguraPagina = canvas.width / escala;
+            const alturaPagina = canvas.height / escala;
+
             const pdf = new jsPDF({
-                orientation: 'portrait',
+                orientation: larguraPagina > alturaPagina ? 'landscape' : 'portrait',
                 unit: 'px',
-                format: [canvas.width, canvas.height],
+                format: [larguraPagina, alturaPagina],
             });
-            pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+
+            pdf.addImage(imgData, 'PNG', 0, 0, larguraPagina, alturaPagina);
             pdf.save(`carta-${cartaId}.pdf`);
         } catch (err) {
             console.error(err);
